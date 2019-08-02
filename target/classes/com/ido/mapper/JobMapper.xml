@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.JobMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Job">
+		<id column="jobid" property="jobid" jdbcType="VARCHAR" />
+		<result column="jname" property="jname" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		jobid, jname
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from job
+		where jobid = #{jobid,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from job
+		where jobid = #{jobid,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Job">
+		insert into job (jobid, jname)
+		values (#{jobid,jdbcType=VARCHAR}, #{jname,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Job">
+		insert into job
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="jobid != null">
+				jobid,
+			</if>
+			<if test="jname != null">
+				jname,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="jobid != null">
+				#{jobid,jdbcType=VARCHAR},
+			</if>
+			<if test="jname != null">
+				#{jname,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Job">
+		update job
+		<set>
+			<if test="jname != null">
+				jname = #{jname,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where jobid = #{jobid,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Job">
+		update job
+		set
+		jname = #{jname,jdbcType=VARCHAR}
+		where jobid =
+		#{jobid,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有职位信息 -->
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT j.jobid,jname,count(empno) AS count FROM employee e RIGHT JOIN
+		job j ON j.jobid=e.jobid
+		GROUP BY j.jobid
+	</select>
+
+	<!-- 查询所有职位编号和名称 -->
+	<select id="selectAllNameAndNo" resultMap="BaseResultMap">
+		SELECT jobid,jname
+		FROM job
+	</select>
+</mapper>

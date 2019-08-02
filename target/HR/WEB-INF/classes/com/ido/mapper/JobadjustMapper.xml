@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.JobadjustMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Jobadjust">
+		<id column="adjno" property="adjno" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="prejobid" property="prejobid" jdbcType="VARCHAR" />
+		<result column="latjobid" property="latjobid" jdbcType="VARCHAR" />
+		<result column="adjdate" property="adjdate" jdbcType="DATE" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		adjno, empno, prejobid, latjobid, adjdate, remark
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from jobadjust
+		where adjno = #{adjno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		jobadjust
+		where adjno = #{adjno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Jobadjust">
+		insert into jobadjust (adjno,
+		empno, prejobid,
+		latjobid, adjdate, remark
+		)
+		values
+		(#{adjno,jdbcType=VARCHAR}, #{empno,jdbcType=VARCHAR},
+		#{prejobid,jdbcType=VARCHAR},
+		#{latjobid,jdbcType=VARCHAR},
+		#{adjdate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Jobadjust">
+		insert into jobadjust
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="adjno != null">
+				adjno,
+			</if>
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="prejobid != null">
+				prejobid,
+			</if>
+			<if test="latjobid != null">
+				latjobid,
+			</if>
+			<if test="adjdate != null">
+				adjdate,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="adjno != null">
+				#{adjno,jdbcType=VARCHAR},
+			</if>
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="prejobid != null">
+				#{prejobid,jdbcType=VARCHAR},
+			</if>
+			<if test="latjobid != null">
+				#{latjobid,jdbcType=VARCHAR},
+			</if>
+			<if test="adjdate != null">
+				#{adjdate,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Jobadjust">
+		update jobadjust
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="prejobid != null">
+				prejobid = #{prejobid,jdbcType=VARCHAR},
+			</if>
+			<if test="latjobid != null">
+				latjobid = #{latjobid,jdbcType=VARCHAR},
+			</if>
+			<if test="adjdate != null">
+				adjdate = #{adjdate,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where adjno = #{adjno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Jobadjust">
+		update jobadjust
+		set empno = #{empno,jdbcType=VARCHAR},
+		prejobid =
+		#{prejobid,jdbcType=VARCHAR},
+		latjobid = #{latjobid,jdbcType=VARCHAR},
+		adjdate = #{adjdate,jdbcType=DATE},
+		remark = #{remark,jdbcType=VARCHAR}
+		where adjno = #{adjno,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

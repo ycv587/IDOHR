@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.SubsidyMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Subsidy">
+		<id column="subno" property="subno" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="traffic" property="traffic" jdbcType="DECIMAL" />
+		<result column="meal" property="meal" jdbcType="DECIMAL" />
+		<result column="housing" property="housing" jdbcType="DECIMAL" />
+		<result column="seniority" property="seniority" jdbcType="DECIMAL" />
+		<result column="fivefund" property="fivefund" jdbcType="DECIMAL" />
+		<result column="business" property="business" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		subno, empno, traffic, meal, housing, seniority, fivefund,
+		business
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from subsidy
+		where subno = #{subno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		subsidy
+		where subno = #{subno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Subsidy">
+		insert into subsidy (subno,
+		empno, traffic,
+		meal, housing, seniority,
+		fivefund, business)
+		values
+		(#{subno,jdbcType=VARCHAR}, #{empno,jdbcType=VARCHAR},
+		#{traffic,jdbcType=DECIMAL},
+		#{meal,jdbcType=DECIMAL},
+		#{housing,jdbcType=DECIMAL}, #{seniority,jdbcType=DECIMAL},
+		#{fivefund,jdbcType=DECIMAL}, #{business,jdbcType=DECIMAL})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Subsidy">
+		insert into subsidy
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="subno != null">
+				subno,
+			</if>
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="traffic != null">
+				traffic,
+			</if>
+			<if test="meal != null">
+				meal,
+			</if>
+			<if test="housing != null">
+				housing,
+			</if>
+			<if test="seniority != null">
+				seniority,
+			</if>
+			<if test="fivefund != null">
+				fivefund,
+			</if>
+			<if test="business != null">
+				business,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="subno != null">
+				#{subno,jdbcType=VARCHAR},
+			</if>
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="traffic != null">
+				#{traffic,jdbcType=DECIMAL},
+			</if>
+			<if test="meal != null">
+				#{meal,jdbcType=DECIMAL},
+			</if>
+			<if test="housing != null">
+				#{housing,jdbcType=DECIMAL},
+			</if>
+			<if test="seniority != null">
+				#{seniority,jdbcType=DECIMAL},
+			</if>
+			<if test="fivefund != null">
+				#{fivefund,jdbcType=DECIMAL},
+			</if>
+			<if test="business != null">
+				#{business,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Subsidy">
+		update subsidy
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="traffic != null">
+				traffic = #{traffic,jdbcType=DECIMAL},
+			</if>
+			<if test="meal != null">
+				meal = #{meal,jdbcType=DECIMAL},
+			</if>
+			<if test="housing != null">
+				housing = #{housing,jdbcType=DECIMAL},
+			</if>
+			<if test="seniority != null">
+				seniority = #{seniority,jdbcType=DECIMAL},
+			</if>
+			<if test="fivefund != null">
+				fivefund = #{fivefund,jdbcType=DECIMAL},
+			</if>
+			<if test="business != null">
+				business = #{business,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where subno = #{subno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Subsidy">
+		update subsidy
+		set
+		empno = #{empno,jdbcType=VARCHAR},
+		traffic =
+		#{traffic,jdbcType=DECIMAL},
+		meal = #{meal,jdbcType=DECIMAL},
+		housing =
+		#{housing,jdbcType=DECIMAL},
+		seniority = #{seniority,jdbcType=DECIMAL},
+		fivefund = #{fivefund,jdbcType=DECIMAL},
+		business =
+		#{business,jdbcType=DECIMAL}
+		where subno = #{subno,jdbcType=VARCHAR}
+	</update>
+</mapper>

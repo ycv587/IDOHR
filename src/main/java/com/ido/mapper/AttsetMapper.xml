@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.AttsetMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Attset">
+		<id column="setno" property="setno" jdbcType="VARCHAR" />
+		<result column="attstart" property="attstart" jdbcType="TIME" />
+		<result column="attend" property="attend" jdbcType="TIME" />
+		<result column="attflag" property="attflag" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		setno, attstart, attend, attflag
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from attset
+		where setno = #{setno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from attset
+		where setno = #{setno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Attset">
+		insert into attset (setno,
+		attstart, attend,
+		attflag)
+		values (#{setno,jdbcType=VARCHAR},
+		#{attstart,jdbcType=TIME},
+		#{attend,jdbcType=TIME},
+		#{attflag,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Attset">
+		insert into attset
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="setno != null">
+				setno,
+			</if>
+			<if test="attstart != null">
+				attstart,
+			</if>
+			<if test="attend != null">
+				attend,
+			</if>
+			<if test="attflag != null">
+				attflag,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="setno != null">
+				#{setno,jdbcType=VARCHAR},
+			</if>
+			<if test="attstart != null">
+				#{attstart,jdbcType=TIME},
+			</if>
+			<if test="attend != null">
+				#{attend,jdbcType=TIME},
+			</if>
+			<if test="attflag != null">
+				#{attflag,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Attset">
+		update attset
+		<set>
+			<if test="attstart != null">
+				attstart = #{attstart,jdbcType=TIME},
+			</if>
+			<if test="attend != null">
+				attend = #{attend,jdbcType=TIME},
+			</if>
+			<if test="attflag != null">
+				attflag = #{attflag,jdbcType=INTEGER},
+			</if>
+		</set>
+		where setno = #{setno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Attset">
+		update attset
+		set
+		attstart = #{attstart,jdbcType=TIME},
+		attend = #{attend,jdbcType=TIME},
+		attflag = #{attflag,jdbcType=INTEGER}
+		where setno =
+		#{setno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有配置 -->
+	<select id="selectAll" resultType="com.ido.bean.Attset">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM attset
+	</select>
+
+	<!-- 查询已启用的配置 -->
+	<select id="selectOn" resultType="com.ido.bean.Attset">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM attset
+		WHERE attflag = 1
+	</select>
+
+	<!-- 查询未启用的配置 -->
+	<select id="selectOff" resultType="com.ido.bean.Attset">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM attset
+		WHERE attflag = 0
+	</select>
+</mapper>

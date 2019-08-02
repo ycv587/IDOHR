@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.JoblevelMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Joblevel">
+		<id column="levno" property="levno" jdbcType="VARCHAR" />
+		<result column="levstart" property="levstart" jdbcType="TIMESTAMP" />
+		<result column="levend" property="levend" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<association property="employee" javaType="com.ido.bean.Employee">
+			<id column="empno" property="empno" jdbcType="VARCHAR" />
+			<result column="password" property="password" jdbcType="VARCHAR" />
+			<result column="ename" property="ename" jdbcType="VARCHAR" />
+			<result column="gender" property="gender" jdbcType="VARCHAR" />
+			<result column="birthday" property="birthday" jdbcType="DATE" />
+			<result column="age" property="age" jdbcType="INTEGER" />
+			<result column="phone" property="phone" jdbcType="VARCHAR" />
+			<result column="address" property="address" jdbcType="VARCHAR" />
+			<result column="hiredate" property="hiredate" jdbcType="DATE" />
+			<result column="mgr" property="mgr" jdbcType="VARCHAR" />
+			<result column="marriage" property="marriage" jdbcType="VARCHAR" />
+			<result column="nativeaddr" property="nativeaddr" jdbcType="VARCHAR" />
+			<result column="peoples" property="peoples" jdbcType="VARCHAR" />
+			<result column="idcard" property="idcard" jdbcType="VARCHAR" />
+			<result column="estatus" property="estatus" jdbcType="VARCHAR" />
+			<result column="blood" property="blood" jdbcType="VARCHAR" />
+			<result column="political" property="political" jdbcType="VARCHAR" />
+			<result column="close" property="close" jdbcType="VARCHAR" />
+			<result column="cphone" property="cphone" jdbcType="VARCHAR" />
+			<result column="salary" property="salary" jdbcType="DECIMAL" />
+			<association property="department" javaType="com.ido.bean.Department">
+				<id column="deptno" property="deptno" jdbcType="VARCHAR" />
+				<result column="dname" property="dname" jdbcType="VARCHAR" />
+				<result column="location" property="location" jdbcType="VARCHAR" />
+			</association>
+			<association property="job" javaType="com.ido.bean.Job">
+				<id column="jobid" property="jobid" jdbcType="VARCHAR" />
+				<result column="jname" property="jname" jdbcType="VARCHAR" />
+			</association>
+			<association property="card" javaType="com.ido.bean.Card">
+				<id column="carno" property="carno" jdbcType="VARCHAR" />
+				<result column="empno" property="empno" jdbcType="VARCHAR" />
+				<result column="salaryac" property="salaryac" jdbcType="VARCHAR" />
+				<result column="saladdr" property="saladdr" jdbcType="VARCHAR" />
+				<result column="provideac" property="provideac" jdbcType="VARCHAR" />
+				<result column="proaddr" property="proaddr" jdbcType="VARCHAR" />
+				<result column="socac" property="socac" jdbcType="VARCHAR" />
+				<result column="socaddr" property="socaddr" jdbcType="VARCHAR" />
+			</association>
+			<collection property="educations" ofType="com.ido.bean.Education">
+				<id column="eduno" property="eduno" jdbcType="VARCHAR" />
+				<result column="empno" property="empno" jdbcType="VARCHAR" />
+				<result column="diploma" property="diploma" jdbcType="VARCHAR" />
+				<result column="gyear" property="gyear" jdbcType="DATE" />
+				<result column="gschool" property="gschool" jdbcType="VARCHAR" />
+				<result column="majors" property="majors" jdbcType="VARCHAR" />
+			</collection>
+			<collection property="labors" ofType="com.ido.bean.Labor">
+				<id column="labno" property="labno" jdbcType="VARCHAR" />
+				<result column="empno" property="empno" jdbcType="VARCHAR" />
+				<result column="startdate" property="startdate" jdbcType="DATE" />
+				<result column="enddate" property="enddate" jdbcType="DATE" />
+				<result column="constatus" property="constatus" jdbcType="VARCHAR" />
+				<association property="contract" javaType="com.ido.bean.Contract">
+					<id column="conno" property="conno" jdbcType="VARCHAR" />
+					<result column="conname" property="conname" jdbcType="VARCHAR" />
+					<result column="conpath" property="conpath" jdbcType="VARCHAR" />
+					<result column="conflag" property="conflag" jdbcType="INTEGER" />
+				</association>
+			</collection>
+			<collection property="jobhistories" ofType="com.ido.bean.Jobhistory">
+				<id column="hisno" property="hisno" jdbcType="VARCHAR" />
+				<result column="empno" property="empno" jdbcType="VARCHAR" />
+				<result column="company" property="company" jdbcType="VARCHAR" />
+				<result column="hhire" property="hhire" jdbcType="DATE" />
+				<result column="hquit" property="hquit" jdbcType="DATE" />
+				<result column="job" property="job" jdbcType="VARCHAR" />
+			</collection>
+		</association>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		levno, empno, levstart, levend, remark
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from joblevel
+		where levno = #{levno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		joblevel
+		where levno = #{levno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Joblevel">
+		<selectKey keyProperty="levno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into joblevel (levno,
+		empno, levstart,
+		levend, remark)
+		values
+		(#{levno,jdbcType=VARCHAR},
+		#{employee.empno,jdbcType=VARCHAR},
+		#{levstart,jdbcType=TIMESTAMP},
+		#{levend,jdbcType=TIMESTAMP},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Joblevel">
+		<selectKey keyProperty="levno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into joblevel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="levno != null">
+				levno,
+			</if>
+			<if test="employee != null and employee.empno != null">
+				empno,
+			</if>
+			<if test="levstart != null">
+				levstart,
+			</if>
+			<if test="levend != null">
+				levend,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="levno != null">
+				#{levno,jdbcType=VARCHAR},
+			</if>
+			<if test="employee != null and employee.empno != null">
+				#{employee.empno,jdbcType=VARCHAR},
+			</if>
+			<if test="levstart != null">
+				#{levstart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="levend != null">
+				#{levend,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Joblevel">
+		update joblevel
+		<set>
+			<if test="employee != null and empno != null">
+				empno = #{employee.empno,jdbcType=VARCHAR},
+			</if>
+			<if test="levstart != null">
+				levstart = #{levstart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="levend != null">
+				levend = #{levend,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where levno = #{levno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Joblevel">
+		update joblevel
+		set empno = #{employee.empno,jdbcType=VARCHAR},
+		levstart =
+		#{levstart,jdbcType=TIMESTAMP},
+		levend = #{levend,jdbcType=TIMESTAMP},
+		remark = #{remark,jdbcType=VARCHAR}
+		where levno =
+		#{levno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有请假记录 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM joblevel
+	</select>
+
+	<!-- 根据员工编号查询 -->
+	<select id="selectByEmpno" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM joblevel
+		WHERE empno = #{empno,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

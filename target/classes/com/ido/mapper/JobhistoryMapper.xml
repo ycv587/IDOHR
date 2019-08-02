@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.JobhistoryMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Jobhistory">
+		<id column="hisno" property="hisno" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+		<result column="hhire" property="hhire" jdbcType="DATE" />
+		<result column="hquit" property="hquit" jdbcType="DATE" />
+		<result column="job" property="job" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		hisno, empno, company, hhire, hquit, job
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from jobhistory
+		where hisno = #{hisno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		jobhistory
+		where hisno = #{hisno,jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 插入时主键使用UUID -->
+	<insert id="insert" parameterType="com.ido.bean.Jobhistory">
+		<selectKey keyProperty="hisno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into jobhistory (hisno, empno, company,
+		hhire, hquit, job)
+		values (#{hisno,jdbcType=VARCHAR}, #{empno,jdbcType=VARCHAR},
+		#{company,jdbcType=VARCHAR},
+		#{hhire,jdbcType=DATE},
+		#{hquit,jdbcType=DATE}, #{job,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Jobhistory">
+		<selectKey keyProperty="hisno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into jobhistory
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			hisno,
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="company != null">
+				company,
+			</if>
+			<if test="hhire != null">
+				hhire,
+			</if>
+			<if test="hquit != null">
+				hquit,
+			</if>
+			<if test="job != null">
+				job,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{hisno,jdbcType=VARCHAR},
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				#{company,jdbcType=VARCHAR},
+			</if>
+			<if test="hhire != null">
+				#{hhire,jdbcType=DATE},
+			</if>
+			<if test="hquit != null">
+				#{hquit,jdbcType=DATE},
+			</if>
+			<if test="job != null">
+				#{job,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Jobhistory">
+		update jobhistory
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				company = #{company,jdbcType=VARCHAR},
+			</if>
+			<if test="hhire != null">
+				hhire = #{hhire,jdbcType=DATE},
+			</if>
+			<if test="hquit != null">
+				hquit = #{hquit,jdbcType=DATE},
+			</if>
+			<if test="job != null">
+				job = #{job,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where hisno = #{hisno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Jobhistory">
+		update jobhistory
+		set empno = #{empno,jdbcType=VARCHAR},
+		company =
+		#{company,jdbcType=VARCHAR},
+		hhire = #{hhire,jdbcType=DATE},
+		hquit =
+		#{hquit,jdbcType=DATE},
+		job = #{job,jdbcType=VARCHAR}
+		where hisno =
+		#{hisno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 根据员工编号查询员工工作经历 -->
+	<select id="selectJobhisByEmpno" parameterType="String"
+		resultMap="BaseResultMap">
+		SELECT hisno, empno, company, hhire, hquit, job FROM
+		jobhistory
+		WHERE empno = #{empno,jdbcType=VARCHAR}
+	</select>
+</mapper>

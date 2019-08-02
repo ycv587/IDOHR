@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.ResultMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Result">
+		<id column="resno" property="resno" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="REAL" />
+		<association property="merit" javaType="com.ido.bean.Merit">
+			<id column="merno" property="merno" jdbcType="VARCHAR" />
+			<result column="assname" property="assname" jdbcType="VARCHAR" />
+			<result column="initemp" property="initemp" jdbcType="VARCHAR" />
+			<result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+			<result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+		</association>
+		<association property="employee" javaType="com.ido.bean.Employee">
+			<id column="empno" property="empno" jdbcType="VARCHAR" />
+			<result column="password" property="password" jdbcType="VARCHAR" />
+			<result column="ename" property="ename" jdbcType="VARCHAR" />
+			<result column="gender" property="gender" jdbcType="VARCHAR" />
+			<result column="birthday" property="birthday" jdbcType="DATE" />
+			<result column="age" property="age" jdbcType="INTEGER" />
+			<result column="phone" property="phone" jdbcType="VARCHAR" />
+			<result column="address" property="address" jdbcType="VARCHAR" />
+			<result column="hiredate" property="hiredate" jdbcType="DATE" />
+			<result column="mgr" property="mgr" jdbcType="VARCHAR" />
+			<result column="marriage" property="marriage" jdbcType="VARCHAR" />
+			<result column="nativeaddr" property="nativeaddr" jdbcType="VARCHAR" />
+			<result column="peoples" property="peoples" jdbcType="VARCHAR" />
+			<result column="idcard" property="idcard" jdbcType="VARCHAR" />
+			<result column="estatus" property="estatus" jdbcType="VARCHAR" />
+			<result column="blood" property="blood" jdbcType="VARCHAR" />
+			<result column="political" property="political" jdbcType="VARCHAR" />
+			<result column="close" property="close" jdbcType="VARCHAR" />
+			<result column="cphone" property="cphone" jdbcType="VARCHAR" />
+			<result column="salary" property="salary" jdbcType="DECIMAL" />
+			<association property="department" javaType="com.ido.bean.Department">
+				<id column="deptno" property="deptno" jdbcType="VARCHAR" />
+				<result column="dname" property="dname" jdbcType="VARCHAR" />
+				<result column="location" property="location" jdbcType="VARCHAR" />
+			</association>
+			<association property="job" javaType="com.ido.bean.Job">
+				<id column="jobid" property="jobid" jdbcType="VARCHAR" />
+				<result column="jname" property="jname" jdbcType="VARCHAR" />
+			</association>
+			<association property="card" javaType="com.ido.bean.Card">
+				<id column="carno" property="carno" jdbcType="VARCHAR" />
+				<result column="empno" property="empno" jdbcType="VARCHAR" />
+				<result column="salaryac" property="salaryac" jdbcType="VARCHAR" />
+				<result column="saladdr" property="saladdr" jdbcType="VARCHAR" />
+				<result column="provideac" property="provideac" jdbcType="VARCHAR" />
+				<result column="proaddr" property="proaddr" jdbcType="VARCHAR" />
+				<result column="socac" property="socac" jdbcType="VARCHAR" />
+				<result column="socaddr" property="socaddr" jdbcType="VARCHAR" />
+			</association>
+			<collection property="educations" ofType="com.ido.bean.Education">
+				<id column="eduno" property="eduno" jdbcType="VARCHAR" />
+				<result column="empno" property="empno" jdbcType="VARCHAR" />
+				<result column="diploma" property="diploma" jdbcType="VARCHAR" />
+				<result column="gyear" property="gyear" jdbcType="DATE" />
+				<result column="gschool" property="gschool" jdbcType="VARCHAR" />
+				<result column="majors" property="majors" jdbcType="VARCHAR" />
+			</collection>
+			<collection property="labors" ofType="com.ido.bean.Labor">
+				<id column="labno" property="labno" jdbcType="VARCHAR" />
+				<result column="empno" property="empno" jdbcType="VARCHAR" />
+				<result column="startdate" property="startdate" jdbcType="DATE" />
+				<result column="enddate" property="enddate" jdbcType="DATE" />
+				<result column="constatus" property="constatus" jdbcType="VARCHAR" />
+				<association property="contract" javaType="com.ido.bean.Contract">
+					<id column="conno" property="conno" jdbcType="VARCHAR" />
+					<result column="conname" property="conname" jdbcType="VARCHAR" />
+					<result column="conpath" property="conpath" jdbcType="VARCHAR" />
+					<result column="conflag" property="conflag" jdbcType="INTEGER" />
+				</association>
+			</collection>
+			<collection property="jobhistories" ofType="com.ido.bean.Jobhistory">
+				<id column="hisno" property="hisno" jdbcType="VARCHAR" />
+				<result column="empno" property="empno" jdbcType="VARCHAR" />
+				<result column="company" property="company" jdbcType="VARCHAR" />
+				<result column="hhire" property="hhire" jdbcType="DATE" />
+				<result column="hquit" property="hquit" jdbcType="DATE" />
+				<result column="job" property="job" jdbcType="VARCHAR" />
+			</collection>
+		</association>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		resno, empno, merno, score
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from result
+		where resno = #{resno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from result
+		where resno = #{resno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Result">
+		<selectKey keyProperty="resno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into result (resno,
+		empno, merno,
+		score)
+		values
+		(#{resno,jdbcType=VARCHAR},
+		#{employee.empno,jdbcType=VARCHAR},
+		#{merit.merno,jdbcType=VARCHAR},
+		#{score,jdbcType=REAL})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Result">
+		<selectKey keyProperty="resno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into result
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="resno != null">
+				resno,
+			</if>
+			<if test="employee != null and employee.empno != null">
+				empno,
+			</if>
+			<if test="merit != null and merit.merno != null">
+				merno,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="resno != null">
+				#{resno,jdbcType=VARCHAR},
+			</if>
+			<if test="employee != null and employee.empno != null">
+				#{employee.empno,jdbcType=VARCHAR},
+			</if>
+			<if test="merit != null and merit.merno != null">
+				#{merit.merno,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null">
+				#{score,jdbcType=REAL},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Result">
+		update result
+		<set>
+			<if test="employee != null and employee.empno != null">
+				empno = #{employee.empno,jdbcType=VARCHAR},
+			</if>
+			<if test="merit != null and merit.merno != null">
+				merno = #{merit.merno,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=REAL},
+			</if>
+		</set>
+		where resno = #{resno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Result">
+		update result
+		set
+		empno = #{employee.empno,jdbcType=VARCHAR},
+		merno =
+		#{merit.merno,jdbcType=VARCHAR},
+		score = #{score,jdbcType=REAL}
+		where
+		resno = #{resno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有记录 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM result
+	</select>
+
+	<!-- 按考核号查询 -->
+	<select id="selectByMerno" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM result
+		WHERE merno = #{merno,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

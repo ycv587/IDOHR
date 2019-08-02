@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.EmproleMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Emprole">
+		<id column="epno" property="epno" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="roleno" property="roleno" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		epno, empno, roleno
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from emprole
+		where epno = #{epno,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		emprole
+		where epno = #{epno,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insert" parameterType="com.ido.bean.Emprole">
+		insert into emprole (epno,
+		empno, roleno
+		)
+		values (#{epno,jdbcType=VARCHAR},
+		#{empno,jdbcType=VARCHAR},
+		#{roleno,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.ido.bean.Emprole">
+		insert into emprole
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="epno != null">
+				epno,
+			</if>
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="roleno != null">
+				roleno,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="epno != null">
+				#{epno,jdbcType=VARCHAR},
+			</if>
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="roleno != null">
+				#{roleno,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Emprole">
+		update emprole
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="roleno != null">
+				roleno = #{roleno,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where epno = #{epno,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Emprole">
+		update emprole
+		set
+		empno = #{empno,jdbcType=VARCHAR},
+		roleno = #{roleno,jdbcType=VARCHAR}
+		where epno = #{epno,jdbcType=VARCHAR}
+	</update>
+	
+</mapper>

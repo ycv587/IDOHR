@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.EducationMapper">
+	<resultMap id="BaseResultMap" type="com.ido.bean.Education">
+		<id column="eduno" property="eduno" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="diploma" property="diploma" jdbcType="VARCHAR" />
+		<result column="gyear" property="gyear" jdbcType="DATE" />
+		<result column="gschool" property="gschool" jdbcType="VARCHAR" />
+		<result column="majors" property="majors" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		eduno, empno, diploma, gyear, gschool, majors
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from education
+		where eduno = #{eduno,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		education
+		where eduno = #{eduno,jdbcType=VARCHAR}
+	</delete>
+	<!-- 插入时主键使用UUID -->
+	<insert id="insert" parameterType="com.ido.bean.Education">
+		<selectKey keyProperty="eduno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into education (eduno,
+		empno, diploma,
+		gyear, gschool, majors
+		)
+		values
+		(#{eduno,jdbcType=VARCHAR}, #{empno,jdbcType=VARCHAR},
+		#{diploma,jdbcType=VARCHAR},
+		#{gyear,jdbcType=DATE},
+		#{gschool,jdbcType=VARCHAR}, #{majors,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.ido.bean.Education">
+		<selectKey keyProperty="eduno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into education
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			eduno,
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="diploma != null">
+				diploma,
+			</if>
+			<if test="gyear != null">
+				gyear,
+			</if>
+			<if test="gschool != null">
+				gschool,
+			</if>
+			<if test="majors != null">
+				majors,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{eduno,jdbcType=VARCHAR},
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="diploma != null">
+				#{diploma,jdbcType=VARCHAR},
+			</if>
+			<if test="gyear != null">
+				#{gyear,jdbcType=DATE},
+			</if>
+			<if test="gschool != null">
+				#{gschool,jdbcType=VARCHAR},
+			</if>
+			<if test="majors != null">
+				#{majors,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Education">
+		update education
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="diploma != null">
+				diploma = #{diploma,jdbcType=VARCHAR},
+			</if>
+			<if test="gyear != null">
+				gyear = #{gyear,jdbcType=DATE},
+			</if>
+			<if test="gschool != null">
+				gschool = #{gschool,jdbcType=VARCHAR},
+			</if>
+			<if test="majors != null">
+				majors = #{majors,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where eduno = #{eduno,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Education">
+		update education
+		set empno = #{empno,jdbcType=VARCHAR},
+		diploma =
+		#{diploma,jdbcType=VARCHAR},
+		gyear = #{gyear,jdbcType=DATE},
+		gschool =
+		#{gschool,jdbcType=VARCHAR},
+		majors = #{majors,jdbcType=VARCHAR}
+		where
+		eduno = #{eduno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 根据员工编号获取所有教育经历 -->
+	<select id="selectEdusByEmpno" resultMap="BaseResultMap"
+		parameterType="String">
+		SELECT eduno, empno, diploma, gyear, gschool, majors
+		FROM education
+		WHERE empno = #{empno,jdbcType=VARCHAR}
+	</select>
+</mapper>

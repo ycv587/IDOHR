@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.ApptypeMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Apptype">
+		<id column="atypeno" property="atypeno" jdbcType="VARCHAR" />
+		<result column="atype" property="atype" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		atypeno, atype
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from apptype
+		where atypeno = #{atypeno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		apptype
+		where atypeno = #{atypeno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Apptype">
+		insert into apptype (atypeno,
+		atype)
+		values (#{atypeno,jdbcType=VARCHAR}, #{atype,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Apptype">
+		insert into apptype
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="atypeno != null">
+				atypeno,
+			</if>
+			<if test="atype != null">
+				atype,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="atypeno != null">
+				#{atypeno,jdbcType=VARCHAR},
+			</if>
+			<if test="atype != null">
+				#{atype,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Apptype">
+		update apptype
+		<set>
+			<if test="atype != null">
+				atype = #{atype,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where atypeno = #{atypeno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Apptype">
+		update apptype
+		set
+		atype = #{atype,jdbcType=VARCHAR}
+		where atypeno =
+		#{atypeno,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.DepartmentMapper">
+	<resultMap id="BaseResultMap" type="com.ido.bean.Department">
+		<id column="deptno" property="deptno" jdbcType="VARCHAR" />
+		<result column="dname" property="dname" jdbcType="VARCHAR" />
+		<result column="location" property="location" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		deptno, dname, location
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from department
+		where deptno = #{deptno,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		department
+		where deptno = #{deptno,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.ido.bean.Department">
+		insert into department
+		(deptno, dname, location
+		)
+		values (#{deptno,jdbcType=VARCHAR},
+		#{dname,jdbcType=VARCHAR},
+		#{location,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.ido.bean.Department">
+		insert into department
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deptno != null">
+				deptno,
+			</if>
+			<if test="dname != null">
+				dname,
+			</if>
+			<if test="location != null">
+				location,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deptno != null">
+				#{deptno,jdbcType=VARCHAR},
+			</if>
+			<if test="dname != null">
+				#{dname,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				#{location,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Department">
+		update department
+		<set>
+			<if test="dname != null">
+				dname = #{dname,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				location = #{location,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where deptno = #{deptno,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Department">
+		update department
+		set dname = #{dname,jdbcType=VARCHAR},
+		location =
+		#{location,jdbcType=VARCHAR}
+		where deptno = #{deptno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有部门信息 -->
+	<select id="selectAll" resultType="com.ido.bean.Department">
+		SELECT
+		d.deptno,dname,location,count(empno) AS count FROM employee e RIGHT
+		JOIN department d
+		ON d.deptno=e.deptno
+		GROUP BY d.deptno
+		ORDER BY
+		d.deptno
+	</select>
+
+	<!-- 查询所有部门名称和部门编号 -->
+	<select id="selectAllNameAndNo" resultMap="BaseResultMap">
+		SELECT deptno,dname
+		FROM department
+	</select>
+</mapper>

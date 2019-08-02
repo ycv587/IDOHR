@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.SalsetMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Salset">
+		<id column="ssetno" property="ssetno" jdbcType="VARCHAR" />
+		<result column="setname" property="setname" jdbcType="VARCHAR" />
+		<result column="cleardate" property="cleardate" jdbcType="INTEGER" />
+		<result column="abspropo" property="abspropo" jdbcType="REAL" />
+		<result column="levpropo" property="levpropo" jdbcType="REAL" />
+		<result column="sickpropo" property="sickpropo" jdbcType="REAL" />
+		<result column="nopropo" property="nopropo" jdbcType="REAL" />
+		<result column="wopropo" property="wopropo" jdbcType="REAL" />
+		<result column="qopropo" property="qopropo" jdbcType="REAL" />
+		<result column="merpropo" property="merpropo" jdbcType="REAL" />
+		<result column="coldage" property="coldage" jdbcType="REAL" />
+		<result column="cmedical" property="cmedical" jdbcType="REAL" />
+		<result column="cunemp" property="cunemp" jdbcType="REAL" />
+		<result column="cinjury" property="cinjury" jdbcType="REAL" />
+		<result column="cbirth" property="cbirth" jdbcType="REAL" />
+		<result column="caccum" property="caccum" jdbcType="REAL" />
+		<result column="eoldage" property="eoldage" jdbcType="REAL" />
+		<result column="emedical" property="emedical" jdbcType="REAL" />
+		<result column="eunemp" property="eunemp" jdbcType="REAL" />
+		<result column="einjury" property="einjury" jdbcType="REAL" />
+		<result column="ebirth" property="ebirth" jdbcType="REAL" />
+		<result column="eaccum" property="eaccum" jdbcType="REAL" />
+		<result column="setflag" property="setflag" jdbcType="INTEGER" />
+		<result column="startdate" property="startdate" jdbcType="DATE" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ssetno, setname, cleardate, abspropo, levpropo, sickpropo,
+		nopropo, wopropo,
+		qopropo,
+		merpropo, coldage, cmedical, cunemp, cinjury,
+		cbirth, caccum, eoldage,
+		emedical,
+		eunemp, einjury, ebirth, eaccum,
+		setflag, startdate
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from salset
+		where ssetno = #{ssetno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from salset
+		where ssetno = #{ssetno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Salset">
+		<selectKey keyProperty="ssetno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into salset (ssetno,
+		setname, cleardate,
+		abspropo, levpropo,
+		sickpropo,
+		nopropo, wopropo,
+		qopropo, merpropo,
+		coldage, cmedical,
+		cunemp, cinjury,
+		cbirth, caccum,
+		eoldage, emedical,
+		eunemp, einjury,
+		ebirth, eaccum,
+		setflag, startdate)
+		values (#{ssetno,jdbcType=VARCHAR},
+		#{setname,jdbcType=VARCHAR},
+		#{cleardate,jdbcType=INTEGER},
+		#{abspropo,jdbcType=REAL},
+		#{levpropo,jdbcType=REAL},
+		#{sickpropo,jdbcType=REAL},
+		#{nopropo,jdbcType=REAL},
+		#{wopropo,jdbcType=REAL},
+		#{qopropo,jdbcType=REAL},
+		#{merpropo,jdbcType=REAL},
+		#{coldage,jdbcType=REAL},
+		#{cmedical,jdbcType=REAL},
+		#{cunemp,jdbcType=REAL},
+		#{cinjury,jdbcType=REAL},
+		#{cbirth,jdbcType=REAL},
+		#{caccum,jdbcType=REAL},
+		#{eoldage,jdbcType=REAL},
+		#{emedical,jdbcType=REAL},
+		#{eunemp,jdbcType=REAL},
+		#{einjury,jdbcType=REAL},
+		#{ebirth,jdbcType=REAL},
+		#{eaccum,jdbcType=REAL},
+		#{setflag,jdbcType=INTEGER},
+		#{startdate,jdbcType=DATE})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Salset">
+		<selectKey keyProperty="ssetno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into salset
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ssetno != null">
+				ssetno,
+			</if>
+			<if test="setname != null">
+				setname,
+			</if>
+			<if test="cleardate != null">
+				cleardate,
+			</if>
+			<if test="abspropo != null">
+				abspropo,
+			</if>
+			<if test="levpropo != null">
+				levpropo,
+			</if>
+			<if test="sickpropo != null">
+				sickpropo,
+			</if>
+			<if test="nopropo != null">
+				nopropo,
+			</if>
+			<if test="wopropo != null">
+				wopropo,
+			</if>
+			<if test="qopropo != null">
+				qopropo,
+			</if>
+			<if test="merpropo != null">
+				merpropo,
+			</if>
+			<if test="coldage != null">
+				coldage,
+			</if>
+			<if test="cmedical != null">
+				cmedical,
+			</if>
+			<if test="cunemp != null">
+				cunemp,
+			</if>
+			<if test="cinjury != null">
+				cinjury,
+			</if>
+			<if test="cbirth != null">
+				cbirth,
+			</if>
+			<if test="caccum != null">
+				caccum,
+			</if>
+			<if test="eoldage != null">
+				eoldage,
+			</if>
+			<if test="emedical != null">
+				emedical,
+			</if>
+			<if test="eunemp != null">
+				eunemp,
+			</if>
+			<if test="einjury != null">
+				einjury,
+			</if>
+			<if test="ebirth != null">
+				ebirth,
+			</if>
+			<if test="eaccum != null">
+				eaccum,
+			</if>
+			<if test="setflag != null">
+				setflag,
+			</if>
+			<if test="startdate != null">
+				startdate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ssetno != null">
+				#{ssetno,jdbcType=VARCHAR},
+			</if>
+			<if test="setname != null">
+				#{setname,jdbcType=VARCHAR},
+			</if>
+			<if test="cleardate != null">
+				#{cleardate,jdbcType=INTEGER},
+			</if>
+			<if test="abspropo != null">
+				#{abspropo,jdbcType=REAL},
+			</if>
+			<if test="levpropo != null">
+				#{levpropo,jdbcType=REAL},
+			</if>
+			<if test="sickpropo != null">
+				#{sickpropo,jdbcType=REAL},
+			</if>
+			<if test="nopropo != null">
+				#{nopropo,jdbcType=REAL},
+			</if>
+			<if test="wopropo != null">
+				#{wopropo,jdbcType=REAL},
+			</if>
+			<if test="qopropo != null">
+				#{qopropo,jdbcType=REAL},
+			</if>
+			<if test="merpropo != null">
+				#{merpropo,jdbcType=REAL},
+			</if>
+			<if test="coldage != null">
+				#{coldage,jdbcType=REAL},
+			</if>
+			<if test="cmedical != null">
+				#{cmedical,jdbcType=REAL},
+			</if>
+			<if test="cunemp != null">
+				#{cunemp,jdbcType=REAL},
+			</if>
+			<if test="cinjury != null">
+				#{cinjury,jdbcType=REAL},
+			</if>
+			<if test="cbirth != null">
+				#{cbirth,jdbcType=REAL},
+			</if>
+			<if test="caccum != null">
+				#{caccum,jdbcType=REAL},
+			</if>
+			<if test="eoldage != null">
+				#{eoldage,jdbcType=REAL},
+			</if>
+			<if test="emedical != null">
+				#{emedical,jdbcType=REAL},
+			</if>
+			<if test="eunemp != null">
+				#{eunemp,jdbcType=REAL},
+			</if>
+			<if test="einjury != null">
+				#{einjury,jdbcType=REAL},
+			</if>
+			<if test="ebirth != null">
+				#{ebirth,jdbcType=REAL},
+			</if>
+			<if test="eaccum != null">
+				#{eaccum,jdbcType=REAL},
+			</if>
+			<if test="setflag != null">
+				#{setflag,jdbcType=INTEGER},
+			</if>
+			<if test="startdate != null">
+				#{startdate,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Salset">
+		update salset
+		<set>
+			<if test="setname != null">
+				setname = #{setname,jdbcType=VARCHAR},
+			</if>
+			<if test="cleardate != null">
+				cleardate = #{cleardate,jdbcType=INTEGER},
+			</if>
+			<if test="abspropo != null">
+				abspropo = #{abspropo,jdbcType=REAL},
+			</if>
+			<if test="levpropo != null">
+				levpropo = #{levpropo,jdbcType=REAL},
+			</if>
+			<if test="sickpropo != null">
+				sickpropo = #{sickpropo,jdbcType=REAL},
+			</if>
+			<if test="nopropo != null">
+				nopropo = #{nopropo,jdbcType=REAL},
+			</if>
+			<if test="wopropo != null">
+				wopropo = #{wopropo,jdbcType=REAL},
+			</if>
+			<if test="qopropo != null">
+				qopropo = #{qopropo,jdbcType=REAL},
+			</if>
+			<if test="merpropo != null">
+				merpropo = #{merpropo,jdbcType=REAL},
+			</if>
+			<if test="coldage != null">
+				coldage = #{coldage,jdbcType=REAL},
+			</if>
+			<if test="cmedical != null">
+				cmedical = #{cmedical,jdbcType=REAL},
+			</if>
+			<if test="cunemp != null">
+				cunemp = #{cunemp,jdbcType=REAL},
+			</if>
+			<if test="cinjury != null">
+				cinjury = #{cinjury,jdbcType=REAL},
+			</if>
+			<if test="cbirth != null">
+				cbirth = #{cbirth,jdbcType=REAL},
+			</if>
+			<if test="caccum != null">
+				caccum = #{caccum,jdbcType=REAL},
+			</if>
+			<if test="eoldage != null">
+				eoldage = #{eoldage,jdbcType=REAL},
+			</if>
+			<if test="emedical != null">
+				emedical = #{emedical,jdbcType=REAL},
+			</if>
+			<if test="eunemp != null">
+				eunemp = #{eunemp,jdbcType=REAL},
+			</if>
+			<if test="einjury != null">
+				einjury = #{einjury,jdbcType=REAL},
+			</if>
+			<if test="ebirth != null">
+				ebirth = #{ebirth,jdbcType=REAL},
+			</if>
+			<if test="eaccum != null">
+				eaccum = #{eaccum,jdbcType=REAL},
+			</if>
+			<if test="setflag != null">
+				setflag = #{setflag,jdbcType=INTEGER},
+			</if>
+			<if test="startdate != null">
+				startdate = #{startdate,jdbcType=DATE},
+			</if>
+		</set>
+		where ssetno = #{ssetno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Salset">
+		update salset
+		set
+		setname = #{setname,jdbcType=VARCHAR},
+		cleardate =
+		#{cleardate,jdbcType=INTEGER},
+		abspropo = #{abspropo,jdbcType=REAL},
+		levpropo = #{levpropo,jdbcType=REAL},
+		sickpropo =
+		#{sickpropo,jdbcType=REAL},
+		nopropo = #{nopropo,jdbcType=REAL},
+		wopropo
+		= #{wopropo,jdbcType=REAL},
+		qopropo = #{qopropo,jdbcType=REAL},
+		merpropo = #{merpropo,jdbcType=REAL},
+		coldage =
+		#{coldage,jdbcType=REAL},
+		cmedical = #{cmedical,jdbcType=REAL},
+		cunemp =
+		#{cunemp,jdbcType=REAL},
+		cinjury = #{cinjury,jdbcType=REAL},
+		cbirth =
+		#{cbirth,jdbcType=REAL},
+		caccum = #{caccum,jdbcType=REAL},
+		eoldage =
+		#{eoldage,jdbcType=REAL},
+		emedical = #{emedical,jdbcType=REAL},
+		eunemp =
+		#{eunemp,jdbcType=REAL},
+		einjury = #{einjury,jdbcType=REAL},
+		ebirth =
+		#{ebirth,jdbcType=REAL},
+		eaccum = #{eaccum,jdbcType=REAL},
+		setflag =
+		#{setflag,jdbcType=INTEGER},
+		startdate = #{startdate,jdbcType=DATE}
+		where ssetno = #{ssetno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有配置信息 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM salset
+	</select>
+</mapper>

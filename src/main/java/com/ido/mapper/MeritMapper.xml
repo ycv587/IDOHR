@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.MeritMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Merit">
+		<id column="merno" property="merno" jdbcType="VARCHAR" />
+		<result column="assname" property="assname" jdbcType="VARCHAR" />
+		<result column="initemp" property="initemp" jdbcType="VARCHAR" />
+		<result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		merno, assname, initemp, starttime, endtime
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from merit
+		where merno = #{merno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from merit
+		where merno = #{merno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Merit">
+		<selectKey keyProperty="merno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into merit (merno, assname, initemp,
+		starttime, endtime)
+		values
+		(#{merno,jdbcType=VARCHAR}, #{assname,jdbcType=VARCHAR},
+		#{initemp,jdbcType=VARCHAR},
+		#{starttime,jdbcType=TIMESTAMP},
+		#{endtime,jdbcType=TIMESTAMP})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Merit">
+		<selectKey keyProperty="merno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into merit
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="merno != null">
+				merno,
+			</if>
+			<if test="assname != null">
+				assname,
+			</if>
+			<if test="initemp != null">
+				initemp,
+			</if>
+			<if test="starttime != null">
+				starttime,
+			</if>
+			<if test="endtime != null">
+				endtime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="merno != null">
+				#{merno,jdbcType=VARCHAR},
+			</if>
+			<if test="assname != null">
+				#{assname,jdbcType=VARCHAR},
+			</if>
+			<if test="initemp != null">
+				#{initemp,jdbcType=VARCHAR},
+			</if>
+			<if test="starttime != null">
+				#{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				#{endtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Merit">
+		update merit
+		<set>
+			<if test="assname != null">
+				assname = #{assname,jdbcType=VARCHAR},
+			</if>
+			<if test="initemp != null">
+				initemp = #{initemp,jdbcType=VARCHAR},
+			</if>
+			<if test="starttime != null">
+				starttime = #{starttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				endtime = #{endtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where merno = #{merno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Merit">
+		update merit
+		set
+		assname = #{assname,jdbcType=VARCHAR},
+		initemp =
+		#{initemp,jdbcType=VARCHAR},
+		starttime =
+		#{starttime,jdbcType=TIMESTAMP},
+		endtime =
+		#{endtime,jdbcType=TIMESTAMP}
+		where merno = #{merno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有绩效考核 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM merit
+	</select>
+
+	<!-- 查询所有正在进行的绩效考核 -->
+	<select id="selectOn" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM merit
+		WHERE endtime >= NOW()
+	</select>
+
+	<!-- 查询所有已结束的绩效考核 -->
+	<select id="selectOff" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM merit
+		WHERE endtime &lt;= NOW()
+	</select>
+
+	<!-- 查询所有还未开始的绩效考核 -->
+	<select id="selectSatrt" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM merit
+		WHERE starttime >= NOW()
+	</select>
+
+	<!-- 查询某时间点正在进行的绩效考核 -->
+	<select id="selectTime" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM merit
+		WHERE starttime &lt;= #{time,jdbcType=TIMESTAMP}
+		AND endtime
+		>= #{time,jdbcType=TIMESTAMP}
+	</select>
+
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.IncometaxMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Incometax">
+		<id column="taxno" property="taxno" jdbcType="VARCHAR" />
+		<result column="taxstart" property="taxstart" jdbcType="REAL" />
+		<result column="rate" property="rate" jdbcType="REAL" />
+		<result column="taxsub" property="taxsub" jdbcType="REAL" />
+		<result column="taxflag" property="taxflag" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		taxno, taxstart, rate, taxsub, taxflag
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from incometax
+		where taxno = #{taxno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		incometax
+		where taxno = #{taxno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Incometax">
+		insert into incometax (taxno,
+		taxstart, rate,
+		taxsub, taxflag)
+		values (#{taxno,jdbcType=VARCHAR},
+		#{taxstart,jdbcType=REAL},
+		#{rate,jdbcType=REAL},
+		#{taxsub,jdbcType=REAL}, #{taxflag,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Incometax">
+		insert into incometax
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="taxno != null">
+				taxno,
+			</if>
+			<if test="taxstart != null">
+				taxstart,
+			</if>
+			<if test="rate != null">
+				rate,
+			</if>
+			<if test="taxsub != null">
+				taxsub,
+			</if>
+			<if test="taxflag != null">
+				taxflag,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="taxno != null">
+				#{taxno,jdbcType=VARCHAR},
+			</if>
+			<if test="taxstart != null">
+				#{taxstart,jdbcType=REAL},
+			</if>
+			<if test="rate != null">
+				#{rate,jdbcType=REAL},
+			</if>
+			<if test="taxsub != null">
+				#{taxsub,jdbcType=REAL},
+			</if>
+			<if test="taxflag != null">
+				#{taxflag,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Incometax">
+		update incometax
+		<set>
+			<if test="taxstart != null">
+				taxstart = #{taxstart,jdbcType=REAL},
+			</if>
+			<if test="rate != null">
+				rate = #{rate,jdbcType=REAL},
+			</if>
+			<if test="taxsub != null">
+				taxsub = #{taxsub,jdbcType=REAL},
+			</if>
+			<if test="taxflag != null">
+				taxflag = #{taxflag,jdbcType=INTEGER},
+			</if>
+		</set>
+		where taxno = #{taxno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Incometax">
+		update incometax
+		set taxstart = #{taxstart,jdbcType=REAL},
+		rate = #{rate,jdbcType=REAL},
+		taxsub = #{taxsub,jdbcType=REAL},
+		taxflag = #{taxflag,jdbcType=INTEGER}
+		where taxno = #{taxno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有个人所得税配置 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM incometax
+	</select>
+</mapper>

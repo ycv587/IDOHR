@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.PerroleMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Perrole">
+		<id column="prno" property="prno" jdbcType="VARCHAR" />
+		<result column="perid" property="perid" jdbcType="VARCHAR" />
+		<result column="roleno" property="roleno" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		prno, perid, roleno
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from perrole
+		where prno = #{prno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		perrole
+		where prno = #{prno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Perrole">
+		insert into perrole (prno,
+		perid, roleno
+		)
+		values (#{prno,jdbcType=VARCHAR},
+		#{perid,jdbcType=VARCHAR},
+		#{roleno,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Perrole">
+		insert into perrole
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="prno != null">
+				prno,
+			</if>
+			<if test="perid != null">
+				perid,
+			</if>
+			<if test="roleno != null">
+				roleno,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="prno != null">
+				#{prno,jdbcType=VARCHAR},
+			</if>
+			<if test="perid != null">
+				#{perid,jdbcType=VARCHAR},
+			</if>
+			<if test="roleno != null">
+				#{roleno,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Perrole">
+		update perrole
+		<set>
+			<if test="perid != null">
+				perid = #{perid,jdbcType=VARCHAR},
+			</if>
+			<if test="roleno != null">
+				roleno = #{roleno,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where prno = #{prno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Perrole">
+		update perrole
+		set
+		perid = #{perid,jdbcType=VARCHAR},
+		roleno = #{roleno,jdbcType=VARCHAR}
+		where prno = #{prno,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

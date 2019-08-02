@@ -1,0 +1,196 @@
+html,body {
+	margin: 0px 0px;
+	background-color: white;
+	overflow-x: hidden;
+}
+
+* {
+	font-family: courier;
+}
+
+#content {
+	width: 350px;
+}
+
+.smlb {
+	font-size: 20px;
+	color: white;
+	float: right;
+	margin-right: 13%;
+	margin-top: -54%;
+	cursor: default;
+}
+
+.aorange {
+	font-weight: bold;
+	font-size: 15px;
+	color: #ff5f07;
+	width: 57px;
+}
+
+.day {
+	font-size: 16px;
+	color: #000000;
+}
+
+.day td {
+	color: #9F9E9E;
+	cursor: default;
+}
+
+.one {
+	font-weight: normal;
+	font-size: 15px;
+	color: #000000;
+	width: 57px;
+	cursor: pointer;
+}
+
+.bs {
+	font-size: 12px;
+	color: #9F9E9E;
+	width: 57px;
+	cursor: pointer;
+}
+
+.lb {
+	font-size: 16px;
+	color: #0099ff
+}
+
+.sm {
+	font-size: 14px;
+	color: #333399
+}
+
+.smz {
+	font-weight: bold;
+	font-size: 14px;
+	color: #0099ff
+}
+
+#cal-content {
+	/*height: 20px;*/
+	margin-top: 5px;
+	text-align: center;
+	background-color: "#FAFBFB";
+}
+
+.detallu {
+	width: 100%;
+	border: 0;
+	color: white;
+	cursor: default;
+}
+
+.lnotice {
+	margin-top: 34%;
+}
+
+#detail {
+	text-align: center;
+	/*background-color: #768F9B;*/
+	background: #536976;
+  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #292E49, #536976);
+  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #292E49, #536976);
+ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#oTime {
+	color: white;
+	text-align: center;
+	font-family: }
+
+.sm span {
+	color: black;
+}
+
+.thead span {
+	color: #768F9B;
+}
+
+#clock {
+	font-family: courier;
+	margin-top: -23%;
+	padding-bottom: 5%;
+}
+
+
+/*年份，月份切换*/
+
+.year_select {
+	display: inline-block;
+	padding-right: 23px;
+}
+
+.home_select {
+	display: inline-block;
+	padding-right: 18px;
+}
+
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+
+select::-ms-expand {
+	display: none;
+}
+
+.ch {
+  	/* fallback for old browsers */
+	background: #536976;
+ 	/* Chrome 10-25, Safari 5.1-6 */
+	background: -webkit-linear-gradient(to right, #292E49, #536976);
+ 	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: linear-gradient(to right, #292E49, #536976);
+}
+
+.day td {
+	width: 57px;
+	color: white;
+	text-align: center;
+}
+
+select {
+	margin-bottom: 9px;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	border: 0;
+	border-radius: 2px;
+	color: #000000;
+	padding-top: 6px;
+	background-color: white;
+	padding-bottom: 2px;
+}
+
+
+/*日历头部*/
+
+.table_head {
+	/*background-color: #768F9B;*/
+	width: 347px;
+	margin-left: -2px;
+	text-align: center;
+	/* fallback for old browsers */
+	background: #536976;
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: -webkit-linear-gradient(to right, #292E49, #536976);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: linear-gradient(to right, #292E49, #536976);
+}
+
+.week {
+	border-spacing: 0;
+}
+
+div.tishishgen0 {
+	text-align: center;
+	margin: 50px 0 10px 0;
+	color: #666
+}
+
+.sym {
+	color: white;
+}

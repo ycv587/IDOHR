@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.CardMapper">
+	<resultMap id="BaseResultMap" type="com.ido.bean.Card">
+		<id column="carno" property="carno" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="salaryac" property="salaryac" jdbcType="VARCHAR" />
+		<result column="saladdr" property="saladdr" jdbcType="VARCHAR" />
+		<result column="provideac" property="provideac" jdbcType="VARCHAR" />
+		<result column="proaddr" property="proaddr" jdbcType="VARCHAR" />
+		<result column="socac" property="socac" jdbcType="VARCHAR" />
+		<result column="socaddr" property="socaddr" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		carno, empno, salaryac, saladdr, provideac, proaddr, socac,
+		socaddr
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from card
+		where carno = #{carno,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from card
+		where carno = #{carno,jdbcType=VARCHAR}
+	</delete>
+	<!-- 插入uuid作为主键 -->
+	<insert id="insert" parameterType="com.ido.bean.Card">
+		<selectKey keyProperty="carno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into card (carno, empno, salaryac,
+		saladdr, provideac, proaddr,
+		socac, socaddr)
+		values (#{carno,jdbcType=VARCHAR},
+		#{empno,jdbcType=VARCHAR},
+		#{salaryac,jdbcType=VARCHAR},
+		#{saladdr,jdbcType=VARCHAR}, #{provideac,jdbcType=VARCHAR},
+		#{proaddr,jdbcType=VARCHAR},
+		#{socac,jdbcType=VARCHAR},
+		#{socaddr,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.ido.bean.Card">
+		<selectKey keyProperty="carno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into card
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			carno,
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="salaryac != null">
+				salaryac,
+			</if>
+			<if test="saladdr != null">
+				saladdr,
+			</if>
+			<if test="provideac != null">
+				provideac,
+			</if>
+			<if test="proaddr != null">
+				proaddr,
+			</if>
+			<if test="socac != null">
+				socac,
+			</if>
+			<if test="socaddr != null">
+				socaddr,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{carno,jdbcType=VARCHAR},
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="salaryac != null">
+				#{salaryac,jdbcType=VARCHAR},
+			</if>
+			<if test="saladdr != null">
+				#{saladdr,jdbcType=VARCHAR},
+			</if>
+			<if test="provideac != null">
+				#{provideac,jdbcType=VARCHAR},
+			</if>
+			<if test="proaddr != null">
+				#{proaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="socac != null">
+				#{socac,jdbcType=VARCHAR},
+			</if>
+			<if test="socaddr != null">
+				#{socaddr,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Card">
+		update card
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="salaryac != null">
+				salaryac = #{salaryac,jdbcType=VARCHAR},
+			</if>
+			<if test="saladdr != null">
+				saladdr = #{saladdr,jdbcType=VARCHAR},
+			</if>
+			<if test="provideac != null">
+				provideac = #{provideac,jdbcType=VARCHAR},
+			</if>
+			<if test="proaddr != null">
+				proaddr = #{proaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="socac != null">
+				socac = #{socac,jdbcType=VARCHAR},
+			</if>
+			<if test="socaddr != null">
+				socaddr = #{socaddr,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where carno = #{carno,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Card">
+		update card
+		set
+		empno = #{empno,jdbcType=VARCHAR},
+		salaryac =
+		#{salaryac,jdbcType=VARCHAR},
+		saladdr = #{saladdr,jdbcType=VARCHAR},
+		provideac = #{provideac,jdbcType=VARCHAR},
+		proaddr =
+		#{proaddr,jdbcType=VARCHAR},
+		socac = #{socac,jdbcType=VARCHAR},
+		socaddr
+		= #{socaddr,jdbcType=VARCHAR}
+		where carno = #{carno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 根据员工编号查询信息 -->
+	<select id="selectCardByEmpno" resultMap="BaseResultMap">
+		SELECT carno, empno,
+		salaryac, saladdr, provideac, proaddr, socac,
+		socaddr FROM card WHERE
+		empno=#{empno,jdbcType=VARCHAR}
+	</select>
+</mapper>

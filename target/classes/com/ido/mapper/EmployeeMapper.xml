@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.EmployeeMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Employee">
+		<id column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="ename" property="ename" jdbcType="VARCHAR" />
+		<result column="gender" property="gender" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="DATE" />
+		<result column="age" property="age" jdbcType="INTEGER" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="hiredate" property="hiredate" jdbcType="DATE" />
+		<result column="mgr" property="mgr" jdbcType="VARCHAR" />
+		<result column="marriage" property="marriage" jdbcType="VARCHAR" />
+		<result column="nativeaddr" property="nativeaddr" jdbcType="VARCHAR" />
+		<result column="peoples" property="peoples" jdbcType="VARCHAR" />
+		<result column="idcard" property="idcard" jdbcType="VARCHAR" />
+		<result column="estatus" property="estatus" jdbcType="VARCHAR" />
+		<result column="blood" property="blood" jdbcType="VARCHAR" />
+		<result column="political" property="political" jdbcType="VARCHAR" />
+		<result column="close" property="close" jdbcType="VARCHAR" />
+		<result column="cphone" property="cphone" jdbcType="VARCHAR" />
+		<result column="salary" property="salary" jdbcType="DECIMAL" />
+		<association property="department" javaType="com.ido.bean.Department">
+			<id column="deptno" property="deptno" jdbcType="VARCHAR" />
+			<result column="dname" property="dname" jdbcType="VARCHAR" />
+			<result column="location" property="location" jdbcType="VARCHAR" />
+		</association>
+		<association property="job" javaType="com.ido.bean.Job">
+			<id column="jobid" property="jobid" jdbcType="VARCHAR" />
+			<result column="jname" property="jname" jdbcType="VARCHAR" />
+		</association>
+		<association property="card" javaType="com.ido.bean.Card">
+			<id column="carno" property="carno" jdbcType="VARCHAR" />
+			<result column="empno" property="empno" jdbcType="VARCHAR" />
+			<result column="salaryac" property="salaryac" jdbcType="VARCHAR" />
+			<result column="saladdr" property="saladdr" jdbcType="VARCHAR" />
+			<result column="provideac" property="provideac" jdbcType="VARCHAR" />
+			<result column="proaddr" property="proaddr" jdbcType="VARCHAR" />
+			<result column="socac" property="socac" jdbcType="VARCHAR" />
+			<result column="socaddr" property="socaddr" jdbcType="VARCHAR" />
+		</association>
+		<collection property="educations" ofType="com.ido.bean.Education">
+			<id column="eduno" property="eduno" jdbcType="VARCHAR" />
+			<result column="empno" property="empno" jdbcType="VARCHAR" />
+			<result column="diploma" property="diploma" jdbcType="VARCHAR" />
+			<result column="gyear" property="gyear" jdbcType="DATE" />
+			<result column="gschool" property="gschool" jdbcType="VARCHAR" />
+			<result column="majors" property="majors" jdbcType="VARCHAR" />
+		</collection>
+		<collection property="labors" ofType="com.ido.bean.Labor">
+			<id column="labno" property="labno" jdbcType="VARCHAR" />
+			<result column="empno" property="empno" jdbcType="VARCHAR" />
+			<result column="startdate" property="startdate" jdbcType="DATE" />
+			<result column="enddate" property="enddate" jdbcType="DATE" />
+			<result column="constatus" property="constatus" jdbcType="VARCHAR" />
+			<association property="contract" javaType="com.ido.bean.Contract">
+				<id column="conno" property="conno" jdbcType="VARCHAR" />
+				<result column="conname" property="conname" jdbcType="VARCHAR" />
+				<result column="conpath" property="conpath" jdbcType="VARCHAR" />
+				<result column="conflag" property="conflag" jdbcType="INTEGER" />
+			</association>
+		</collection>
+		<collection property="jobhistories" ofType="com.ido.bean.Jobhistory">
+			<id column="hisno" property="hisno" jdbcType="VARCHAR" />
+			<result column="empno" property="empno" jdbcType="VARCHAR" />
+			<result column="company" property="company" jdbcType="VARCHAR" />
+			<result column="hhire" property="hhire" jdbcType="DATE" />
+			<result column="hquit" property="hquit" jdbcType="DATE" />
+			<result column="job" property="job" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+	<sql id="Base_Column_List">
+		empno, password, ename, gender, birthday, age, phone,
+		address, hiredate,
+		jobid, deptno,
+		mgr, marriage, nativeaddr, peoples,
+		idcard, estatus, blood, political, close,
+		cphone, salary
+	</sql>
+
+	<!-- <result column="" property="" /> -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from employee
+		where empno = #{empno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		employee
+		where empno = #{empno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Employee">
+		insert into employee (empno,
+		password, ename,
+		gender, birthday, age,
+		phone, address, hiredate,
+		jobid,
+		deptno, mgr,
+		marriage, nativeaddr, peoples,
+		idcard, estatus, blood,
+		political, close, cphone, salary
+		)
+		values (#{empno,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{ename,jdbcType=VARCHAR},
+		#{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE},
+		#{age,jdbcType=INTEGER},
+		#{phone,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{hiredate,jdbcType=DATE},
+		#{job.jobid,jdbcType=VARCHAR}, #{department.deptno,jdbcType=VARCHAR},
+		#{mgr,jdbcType=VARCHAR},
+		#{marriage,jdbcType=VARCHAR},
+		#{nativeaddr,jdbcType=VARCHAR},
+		#{peoples,jdbcType=VARCHAR},
+		#{idcard,jdbcType=VARCHAR}, #{estatus,jdbcType=VARCHAR},
+		#{blood,jdbcType=VARCHAR},
+		#{political,jdbcType=VARCHAR},
+		#{close,jdbcType=VARCHAR},
+		#{cphone,jdbcType=VARCHAR},
+		#{salary,jdbcType=DECIMAL}
+		)
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Employee">
+		insert into employee
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="ename != null">
+				ename,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="age != null">
+				age,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="hiredate != null">
+				hiredate,
+			</if>
+			<if test="job.jobid != null">
+				jobid,
+			</if>
+			<if test="department.deptno != null">
+				deptno,
+			</if>
+			<if test="mgr != null">
+				mgr,
+			</if>
+			<if test="marriage != null">
+				marriage,
+			</if>
+			<if test="nativeaddr != null">
+				nativeaddr,
+			</if>
+			<if test="peoples != null">
+				peoples,
+			</if>
+			<if test="idcard != null">
+				idcard,
+			</if>
+			<if test="estatus != null">
+				estatus,
+			</if>
+			<if test="blood != null">
+				blood,
+			</if>
+			<if test="political != null">
+				political,
+			</if>
+			<if test="close != null">
+				close,
+			</if>
+			<if test="cphone != null">
+				cphone,
+			</if>
+			<if test="salary != null">
+				salary,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="ename != null">
+				#{ename,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="age != null">
+				#{age,jdbcType=INTEGER},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="hiredate != null">
+				#{hiredate,jdbcType=DATE},
+			</if>
+			<if test="job.jobid != null">
+				#{job.jobid,jdbcType=VARCHAR},
+			</if>
+			<if test="department.deptno != null">
+				#{department.deptno,jdbcType=VARCHAR},
+			</if>
+			<if test="mgr != null">
+				#{mgr,jdbcType=VARCHAR},
+			</if>
+			<if test="marriage != null">
+				#{marriage,jdbcType=VARCHAR},
+			</if>
+			<if test="nativeaddr != null">
+				#{nativeaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="peoples != null">
+				#{peoples,jdbcType=VARCHAR},
+			</if>
+			<if test="idcard != null">
+				#{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="estatus != null">
+				#{estatus,jdbcType=VARCHAR},
+			</if>
+			<if test="blood != null">
+				#{blood,jdbcType=VARCHAR},
+			</if>
+			<if test="political != null">
+				#{political,jdbcType=VARCHAR},
+			</if>
+			<if test="close != null">
+				#{close,jdbcType=VARCHAR},
+			</if>
+			<if test="cphone != null">
+				#{cphone,jdbcType=VARCHAR},
+			</if>
+			<if test="salary != null">
+				#{salary,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Employee">
+		update employee
+		<set>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="ename != null">
+				ename = #{ename,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				gender = #{gender,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="age != null">
+				age = #{age,jdbcType=INTEGER},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="hiredate != null">
+				hiredate = #{hiredate,jdbcType=DATE},
+			</if>
+			<if test="job.jobid != null">
+				jobid = #{job.jobid,jdbcType=VARCHAR},
+			</if>
+			<if test="department.deptno != null">
+				deptno = #{department.deptno,jdbcType=VARCHAR},
+			</if>
+			<if test="mgr != null">
+				mgr = #{mgr,jdbcType=VARCHAR},
+			</if>
+			<if test="marriage != null">
+				marriage = #{marriage,jdbcType=VARCHAR},
+			</if>
+			<if test="nativeaddr != null">
+				nativeaddr = #{nativeaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="peoples != null">
+				peoples = #{peoples,jdbcType=VARCHAR},
+			</if>
+			<if test="idcard != null">
+				idcard = #{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="estatus != null">
+				estatus = #{estatus,jdbcType=VARCHAR},
+			</if>
+			<if test="blood != null">
+				blood = #{blood,jdbcType=VARCHAR},
+			</if>
+			<if test="political != null">
+				political = #{political,jdbcType=VARCHAR},
+			</if>
+			<if test="close != null">
+				close = #{close,jdbcType=VARCHAR},
+			</if>
+			<if test="cphone != null">
+				cphone = #{cphone,jdbcType=VARCHAR},
+			</if>
+			<if test="salary != null">
+				salary = #{salary,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where empno = #{empno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Employee">
+		update employee
+		set password = #{password,jdbcType=VARCHAR},
+		ename =
+		#{ename,jdbcType=VARCHAR},
+		gender = #{gender,jdbcType=VARCHAR},
+		birthday = #{birthday,jdbcType=DATE},
+		age = #{age,jdbcType=INTEGER},
+		phone = #{phone,jdbcType=VARCHAR},
+		address =
+		#{address,jdbcType=VARCHAR},
+		hiredate = #{hiredate,jdbcType=DATE},
+		jobid = #{job.jobid,jdbcType=VARCHAR},
+		deptno =
+		#{department.deptno,jdbcType=VARCHAR},
+		mgr = #{mgr,jdbcType=VARCHAR},
+		marriage = #{marriage,jdbcType=VARCHAR},
+		nativeaddr =
+		#{nativeaddr,jdbcType=VARCHAR},
+		peoples =
+		#{peoples,jdbcType=VARCHAR},
+		idcard = #{idcard,jdbcType=VARCHAR},
+		estatus =
+		#{estatus,jdbcType=VARCHAR},
+		blood =
+		#{blood,jdbcType=VARCHAR},
+		political = #{political,jdbcType=VARCHAR},
+		close =
+		#{close,jdbcType=VARCHAR},
+		cphone = #{cphone,jdbcType=VARCHAR},
+		salary =
+		#{salary,jdbcType=DECIMAL}
+		where
+		empno = #{empno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 根据部门编号修改员工所属部门 -->
+	<update id="updateByDeptno">
+		update employee set
+		deptno=#{newDeptno,jdbcType=VARCHAR}
+		WHERE
+		deptno=#{oldDeptno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 根据职位编号修改员工所在职位 -->
+	<update id="updateByJobid">
+		update employee set
+		jobid=#{newJobid,jdbcType=VARCHAR}
+		WHERE
+		jobid=#{oldJobid,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询全部员工信息 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		empno, password, ename,
+		gender, birthday, age, phone,
+		address, hiredate,
+		employee.jobid,
+		employee.deptno,
+		mgr,
+		marriage, nativeaddr, peoples,
+		idcard, estatus,
+		blood, political,
+		close,
+		cphone,salary,dname,jname
+		FROM
+		employee,department,job
+		WHERE job.jobid = employee.jobid AND
+		department.deptno =
+		employee.deptno
+	</select>
+
+	<!-- 根据条件查询部分员工信息 -->
+	<select id="selectEmps" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		empno, password, ename,
+		gender, birthday, age, phone,
+		address, hiredate,
+		employee.jobid,
+		employee.deptno,
+		mgr,
+		marriage, nativeaddr, peoples,
+		idcard, estatus,
+		blood, political,
+		close,
+		cphone,salary,dname,jname
+		FROM
+		employee,department,job
+		WHERE job.jobid = employee.jobid AND
+		department.deptno =
+		employee.deptno
+		AND
+		empno LIKE CONCAT(CONCAT('%',
+		#{search}),'%')
+		OR
+		ename LIKE CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		gender LIKE CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		age LIKE
+		CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		phone LIKE CONCAT(CONCAT('%',
+		#{search}),'%')
+		OR
+		address LIKE CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		nativeaddr LIKE CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		peoples LIKE
+		CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		idcard LIKE CONCAT(CONCAT('%',
+		#{search}),'%')
+		OR
+		blood LIKE CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		political LIKE CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		close LIKE
+		CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		dname LIKE CONCAT(CONCAT('%',
+		#{search}),'%')
+		OR
+		cphone LIKE CONCAT(CONCAT('%', #{search}),'%')
+		OR
+		jname LIKE CONCAT(CONCAT('%', #{search}),'%')
+	</select>
+
+	<!-- 查询所有员工的编号和姓名 -->
+	<select id="selectAllNameAndNo" resultType="com.ido.bean.Employee">
+		SELECT empno, ename
+		FROM
+		employee
+	</select>
+
+	<!-- 用户登录查询 -->
+	<select id="empLogin" resultMap="BaseResultMap">
+		SELECT
+		empno, password, ename,
+		gender, birthday, age, phone,
+		address, hiredate,
+		employee.jobid,
+		employee.deptno,
+		mgr,
+		marriage, nativeaddr, peoples,
+		idcard, estatus,
+		blood, political,
+		close,
+		cphone,salary,dname,jname
+		FROM
+		employee,department,job
+		WHERE job.jobid = employee.jobid AND
+		department.deptno = employee.deptno AND
+		empno =
+		#{username,jdbcType=VARCHAR} AND
+		password = #{pwd,jdbcType=VARCHAR}
+	</select>
+</mapper>

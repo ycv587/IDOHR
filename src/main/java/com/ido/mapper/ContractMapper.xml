@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.ContractMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Contract">
+		<id column="conno" property="conno" jdbcType="VARCHAR" />
+		<result column="conname" property="conname" jdbcType="VARCHAR" />
+		<result column="conpath" property="conpath" jdbcType="VARCHAR" />
+		<result column="conflag" property="conflag" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		conno, conname, conpath, conflag
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from contract
+		where conno = #{conno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		contract
+		where conno = #{conno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Contract">
+		<selectKey keyProperty="conno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into contract (conno,
+		conname, conpath,
+		conflag)
+		values
+		(#{conno,jdbcType=VARCHAR},
+		#{conname,jdbcType=VARCHAR},
+		#{conpath,jdbcType=VARCHAR},
+		#{conflag,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Contract">
+		<selectKey keyProperty="conno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into contract
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="conno != null">
+				conno,
+			</if>
+			<if test="conname != null">
+				conname,
+			</if>
+			<if test="conpath != null">
+				conpath,
+			</if>
+			<if test="conflag != null">
+				conflag,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="conno != null">
+				#{conno,jdbcType=VARCHAR},
+			</if>
+			<if test="conname != null">
+				#{conname,jdbcType=VARCHAR},
+			</if>
+			<if test="conpath != null">
+				#{conpath,jdbcType=VARCHAR},
+			</if>
+			<if test="conflag != null">
+				#{conflag,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Contract">
+		update contract
+		<set>
+			<if test="conname != null">
+				conname = #{conname,jdbcType=VARCHAR},
+			</if>
+			<if test="conpath != null">
+				conpath = #{conpath,jdbcType=VARCHAR},
+			</if>
+			<if test="conflag != null">
+				conflag = #{conflag,jdbcType=INTEGER},
+			</if>
+		</set>
+		where conno = #{conno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Contract">
+		update contract
+		set conname = #{conname,jdbcType=VARCHAR},
+		conpath =
+		#{conpath,jdbcType=VARCHAR},
+		conflag = #{conflag,jdbcType=INTEGER}
+		where conno = #{conno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 查询所有合同编号和名称 -->
+	<select id="selectAllContractNameAndNo" resultMap="BaseResultMap">
+		SELECT conno,
+		conname FROM contract
+	</select>
+</mapper>

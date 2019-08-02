@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.ApproveMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Approve">
+		<id column="appno" property="appno" jdbcType="VARCHAR" />
+		<result column="subemp" property="subemp" jdbcType="VARCHAR" />
+		<result column="atypeno" property="atypeno" jdbcType="VARCHAR" />
+		<result column="apptime" property="apptime" jdbcType="TIMESTAMP" />
+		<result column="dealemp" property="dealemp" jdbcType="VARCHAR" />
+		<result column="dealtime" property="dealtime" jdbcType="TIMESTAMP" />
+		<result column="appresult" property="appresult" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		appno, subemp, atypeno, apptime, dealemp, dealtime,
+		appresult, remark
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from approve
+		where appno = #{appno,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		approve
+		where appno = #{appno,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="insert" parameterType="com.ido.bean.Approve">
+		insert into approve (appno,
+		subemp, atypeno,
+		apptime, dealemp, dealtime,
+		appresult, remark)
+		values
+		(#{appno,jdbcType=VARCHAR}, #{subemp,jdbcType=VARCHAR},
+		#{atypeno,jdbcType=VARCHAR},
+		#{apptime,jdbcType=TIMESTAMP},
+		#{dealemp,jdbcType=VARCHAR}, #{dealtime,jdbcType=TIMESTAMP},
+		#{appresult,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.ido.bean.Approve">
+		insert into approve
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="appno != null">
+				appno,
+			</if>
+			<if test="subemp != null">
+				subemp,
+			</if>
+			<if test="atypeno != null">
+				atypeno,
+			</if>
+			<if test="apptime != null">
+				apptime,
+			</if>
+			<if test="dealemp != null">
+				dealemp,
+			</if>
+			<if test="dealtime != null">
+				dealtime,
+			</if>
+			<if test="appresult != null">
+				appresult,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="appno != null">
+				#{appno,jdbcType=VARCHAR},
+			</if>
+			<if test="subemp != null">
+				#{subemp,jdbcType=VARCHAR},
+			</if>
+			<if test="atypeno != null">
+				#{atypeno,jdbcType=VARCHAR},
+			</if>
+			<if test="apptime != null">
+				#{apptime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dealemp != null">
+				#{dealemp,jdbcType=VARCHAR},
+			</if>
+			<if test="dealtime != null">
+				#{dealtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="appresult != null">
+				#{appresult,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Approve">
+		update approve
+		<set>
+			<if test="subemp != null">
+				subemp = #{subemp,jdbcType=VARCHAR},
+			</if>
+			<if test="atypeno != null">
+				atypeno = #{atypeno,jdbcType=VARCHAR},
+			</if>
+			<if test="apptime != null">
+				apptime = #{apptime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dealemp != null">
+				dealemp = #{dealemp,jdbcType=VARCHAR},
+			</if>
+			<if test="dealtime != null">
+				dealtime = #{dealtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="appresult != null">
+				appresult = #{appresult,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where appno = #{appno,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Approve">
+		update approve
+		set
+		subemp = #{subemp,jdbcType=VARCHAR},
+		atypeno =
+		#{atypeno,jdbcType=VARCHAR},
+		apptime = #{apptime,jdbcType=TIMESTAMP},
+		dealemp = #{dealemp,jdbcType=VARCHAR},
+		dealtime =
+		#{dealtime,jdbcType=TIMESTAMP},
+		appresult =
+		#{appresult,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where appno = #{appno,jdbcType=VARCHAR}
+	</update>
+	
+</mapper>

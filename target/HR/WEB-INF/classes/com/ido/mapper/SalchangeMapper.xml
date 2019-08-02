@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.SalchangeMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Salchange">
+		<id column="chano" property="chano" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="beforesal" property="beforesal" jdbcType="DECIMAL" />
+		<result column="aftersal" property="aftersal" jdbcType="DECIMAL" />
+		<result column="chadate" property="chadate" jdbcType="DATE" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		chano, empno, beforesal, aftersal, chadate, remark
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from salchange
+		where chano = #{chano,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		salchange
+		where chano = #{chano,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Salchange">
+		insert into salchange (chano,
+		empno, beforesal,
+		aftersal, chadate, remark
+		)
+		values
+		(#{chano,jdbcType=VARCHAR}, #{empno,jdbcType=VARCHAR},
+		#{beforesal,jdbcType=DECIMAL},
+		#{aftersal,jdbcType=DECIMAL},
+		#{chadate,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Salchange">
+		insert into salchange
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="chano != null">
+				chano,
+			</if>
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="beforesal != null">
+				beforesal,
+			</if>
+			<if test="aftersal != null">
+				aftersal,
+			</if>
+			<if test="chadate != null">
+				chadate,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="chano != null">
+				#{chano,jdbcType=VARCHAR},
+			</if>
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="beforesal != null">
+				#{beforesal,jdbcType=DECIMAL},
+			</if>
+			<if test="aftersal != null">
+				#{aftersal,jdbcType=DECIMAL},
+			</if>
+			<if test="chadate != null">
+				#{chadate,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Salchange">
+		update salchange
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="beforesal != null">
+				beforesal = #{beforesal,jdbcType=DECIMAL},
+			</if>
+			<if test="aftersal != null">
+				aftersal = #{aftersal,jdbcType=DECIMAL},
+			</if>
+			<if test="chadate != null">
+				chadate = #{chadate,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where chano = #{chano,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Salchange">
+		update salchange
+		set empno = #{empno,jdbcType=VARCHAR},
+		beforesal =
+		#{beforesal,jdbcType=DECIMAL},
+		aftersal = #{aftersal,jdbcType=DECIMAL},
+		chadate = #{chadate,jdbcType=DATE},
+		remark = #{remark,jdbcType=VARCHAR}
+		where chano = #{chano,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

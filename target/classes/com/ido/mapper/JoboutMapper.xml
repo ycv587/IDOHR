@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.JoboutMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Jobout">
+		<id column="outno" property="outno" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<result column="outdate" property="outdate" jdbcType="DATE" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		outno, empno, outdate, remark
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from jobout
+		where outno = #{outno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from jobout
+		where outno = #{outno,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.ido.bean.Jobout">
+		insert into jobout (outno,
+		empno, outdate,
+		remark)
+		values (#{outno,jdbcType=VARCHAR},
+		#{empno,jdbcType=VARCHAR},
+		#{outdate,jdbcType=DATE},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Jobout">
+		insert into jobout
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="outno != null">
+				outno,
+			</if>
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="outdate != null">
+				outdate,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="outno != null">
+				#{outno,jdbcType=VARCHAR},
+			</if>
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="outdate != null">
+				#{outdate,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Jobout">
+		update jobout
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="outdate != null">
+				outdate = #{outdate,jdbcType=DATE},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where outno = #{outno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Jobout">
+		update jobout
+		set
+		empno = #{empno,jdbcType=VARCHAR},
+		outdate = #{outdate,jdbcType=DATE},
+		remark = #{remark,jdbcType=VARCHAR}
+		where outno =
+		#{outno,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

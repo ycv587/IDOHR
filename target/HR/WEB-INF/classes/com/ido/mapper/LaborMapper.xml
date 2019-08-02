@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ido.mapper.LaborMapper">
+
+	<resultMap id="BaseResultMap" type="com.ido.bean.Labor">
+		<id column="labno" property="labno" jdbcType="VARCHAR" />
+		<result column="empno" property="empno" jdbcType="VARCHAR" />
+		<!-- <result column="conno" property="conno" jdbcType="VARCHAR" /> -->
+		<result column="startdate" property="startdate" jdbcType="DATE" />
+		<result column="enddate" property="enddate" jdbcType="DATE" />
+		<association property="contract" javaType="com.ido.bean.Contract">
+			<id column="conno" property="conno" jdbcType="VARCHAR" />
+			<result column="conname" property="conname" jdbcType="VARCHAR" />
+			<result column="conpath" property="conpath" jdbcType="VARCHAR" />
+			<result column="conflag" property="conflag" jdbcType="INTEGER" />
+		</association>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		labno, empno, conno, startdate, enddate
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from labor
+		where labno = #{labno,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from labor
+		where labno = #{labno,jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 插入时主键使用UUID -->
+	<insert id="insert" parameterType="com.ido.bean.Labor">
+		<selectKey keyProperty="labno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into labor (labno,
+		empno, conno,
+		startdate, enddate
+		)
+		values
+		(#{labno,jdbcType=VARCHAR}, #{empno,jdbcType=VARCHAR},
+		#{contract.conno,jdbcType=VARCHAR},
+		#{startdate,jdbcType=DATE},
+		#{enddate,jdbcType=DATE}
+		)
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.ido.bean.Labor">
+		<selectKey keyProperty="labno" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') FROM dual
+		</selectKey>
+		insert into labor
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			labno,
+			<if test="empno != null">
+				empno,
+			</if>
+			<if test="contract.conno != null">
+				conno,
+			</if>
+			<if test="startdate != null">
+				startdate,
+			</if>
+			<if test="enddate != null">
+				enddate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{labno,jdbcType=VARCHAR},
+			<if test="empno != null">
+				#{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="contract.conno != null">
+				#{contract.conno,jdbcType=VARCHAR},
+			</if>
+			<if test="startdate != null">
+				#{startdate,jdbcType=DATE},
+			</if>
+			<if test="enddate != null">
+				#{enddate,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.ido.bean.Labor">
+		update labor
+		<set>
+			<if test="empno != null">
+				empno = #{empno,jdbcType=VARCHAR},
+			</if>
+			<if test="contract.conno != null">
+				conno = #{contract.conno,jdbcType=VARCHAR},
+			</if>
+			<if test="startdate != null">
+				startdate = #{startdate,jdbcType=DATE},
+			</if>
+			<if test="enddate != null">
+				enddate = #{enddate,jdbcType=DATE},
+			</if>
+		</set>
+		where labno = #{labno,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.ido.bean.Labor">
+		update labor
+		set
+		empno = #{empno,jdbcType=VARCHAR},
+		conno =
+		#{contract.conno,jdbcType=VARCHAR},
+		startdate =
+		#{startdate,jdbcType=DATE},
+		enddate = #{enddate,jdbcType=DATE}
+		where
+		labno =
+		#{labno,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 根据员工号查询所有合同记录 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT labno, empno,
+		labor.conno, startdate, enddate, conname FROM labor,contract
+		WHERE
+		contract.conno = labor.conno
+	</select>
+
+	<!-- 根据员工号查询所有合同记录 -->
+	<select id="selectLaborsByEmpno" parameterType="String"
+		resultMap="BaseResultMap">
+		SELECT labno, empno,
+		labor.conno, startdate, enddate, conname
+		FROM labor,contract
+		WHERE
+		contract.conno = labor.conno AND
+		empno =
+		#{empno,jdbcType=VARCHAR}
+		ORDER BY enddate DESC
+	</select>
+</mapper>

@@ -1,0 +1,28 @@
+.file-block{
+	display: inline-block;
+	font-size: 12px;
+	text-align: center;
+	cursor: default;
+}
+
+.file-block:hover{
+	background-color: #F4F8FE;
+	border: 1px dotted #B9D7FC;
+}
+
+.vist{
+	background-color: #D2E6FD;
+	border: 1px dotted #7DA2CE;	
+}
+
+.file-block div{
+	/* text-align: center; */
+}
+
+.file-block img{
+	width: 30px;
+	height: 30px;
+	margin: 5px auto;
+	text-align: center;
+	display: block;
+}
