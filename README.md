@@ -27,7 +27,7 @@
 &emsp;&emsp;2）访问系统（以本地访问localhost为例）。客户打开浏览器，在地址栏输入：http://localhost:9000/login ，进入IDOHR系统的登录界面，如图3-1-1。用户在登录后（初始账号：admin，密码：admin）进入系统，通过首页左侧的菜单列表选择所需功能。
 
 ![系统登录界面](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/1.png)
-<em style="text-align:center;">图3-1-1 系统登录界面</em>
+<div style="text-align:center;"><em>图3-1-1 系统登录界面</em></div>
 
 ## 四、系统使用说明
 
