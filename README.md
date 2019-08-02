@@ -35,7 +35,6 @@
 &emsp;&emsp;系统提供人事管理、部门职位、薪酬福利、考勤打卡、绩效考核、文件管理等功能模块，实现了人力资源的合理管理、部门职位的灵活变动、工资福利的准确发放、考勤绩效的精准记录等功能。具体的功能点如图4-1-1：
 
 ![系统功能流程图](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/2.png)
-
 <em align="center">图4-1-1 系统功能流程图</em>
 
 ### 4.1 系统主页
@@ -47,6 +46,7 @@
 &emsp;&emsp;系统主界面如图4-1-2：
 
 ![系统主界面](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/3.png)
+<em align="center">图4-1-2 系统主界面</em>
 
 ### 4.2 人事管理
 
@@ -55,56 +55,70 @@
 &emsp;&emsp;在员工信息管理界面中提供员工信息的预览，信息以父子表方式呈现，可以直接在子表中预览用户的更多信息，如教育经历、工作历史、合同信息（已过期合同特殊显示）等，用户也可以双击用户信息打开员工的详细信息界面。在员工表上方左侧是工具菜单，包含员工的新增、删除、修改功能，在右侧有数据刷新，显示列选择、员工信息查询、数据导出等功能。员工信息界面如图4-2-1：
 
 ![员工信息界面](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/4.png)
+<em align="center">图4-2-1 员工信息界面</em>
 
 &emsp;&emsp;员工的新增界面如图4-2-2，用户填写这些信息项就可以新增员工，其中合同信息、教育背景、工作经历都可以添加多项，若数据填写不完整则系统会对未填项进行特殊显示，如图4-2-3。
 
 ![员工新增界面](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/5.png)
+<em align="center">图4-2-2 员工新增界面</em>
 
 ![员工新增错误示例](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/6.png)
+<em align="center">图4-2-3 员工新增错误示例</em>
 
 &emsp;&emsp;在右侧区域可以对员工信息进行搜索，此搜索会匹配数项信息，如查找所有性别为男的员工。员工信息表默认显示一部分的列，更多的列可以点击右侧第二个按钮进行显示。最右侧按钮为数据导出，可将用户选择的列导出为Excel、TXT、JSON等常用格式，将数据导出为Excel格式如图4-2-4。
 
 ![员工新增导出演示](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/7.png)
+<em align="center">图4-2-4 员工新增导出演示</em>
 
 &emsp;&emsp;请假办理界面如图4-2-5，在此功能中可以查看请假记录以及办理请假。
 
 ![请假办理界面](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/8.png)
+<em align="center">图4-2-5 请假办理界面</em>
 
 &emsp;&emsp;员工加班功能中，可以查看员工的加班记录以及记录新的加班。当加班时间属于工作日时，系统会给出提示，如图4-2-6：
 
 ![加班提交演示](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/9.png)
+<em align="center">图4-2-6 加班提交演示</em>
 
 ### 4.3 考勤打卡
 
 &emsp;&emsp;模块提供考勤打卡相关的功能。在页面中可以进行考勤相关的配置与浏览。系统在网页中不提供打卡功能，但是为打卡功能做了设计与实现，用户可以自行购买指纹打卡机等设备，通过系统开放的接口去连接这些物理设备进行打卡。系统新增考勤配置如图4-3-1；考勤记录查询如图4-3-2。
 
 ![新增考勤配置](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/10.png)
+<em align="center">图4-3-1 新增考勤配置</em>
 
 ![考勤记录查询](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/11.png)
+<em align="center">图4-3-2 考勤记录查询</em>
 
 ### 4.4 薪酬福利
 
 &emsp;&emsp;项目中集成了薪酬体系，薪酬福利模块为用户提供了薪资制度自定义、个人所得税配置等用户可自定义的设置功能，系统会根据用户自定义配置自动计算员工的薪资，薪资采用月结（按照用户设置，在结算日自动结算）的方式，并可与考勤、绩效考核等信息关联。图4-4-1展示了薪资制度自定义配置的界面；图4-4-2展示了薪酬记录月度查询界面。
 
 ![薪酬制度配置](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/12.png)
+<em align="center">图4-4-1 薪酬制度配置</em>
 
 ![薪酬记录月度查询](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/13.png)
+<em align="center">图4-4-2 薪酬记录月度查询</em>
 
 ### 4.5 绩效考核
 
 &emsp;&emsp;用户可以进行绩效考核相关的配置与浏览。可以在这个功能模块下发起考核、查看考核信息，并且可以在考核结束后对考核的结果进行计分。发起考核如图4-5-1；考核评分如图4-5-2。
 
 ![发起考核](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/14.png)
+<em align="center">图4-5-1 发起考核</em>
 
 ![考核评分](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/15.png)
+<em align="center">图4-5-2 考核评分</em>
 
 ### 4.6 合同管理
 
 &emsp;&emsp;在合同管理模块中包含合同的上传、下载、预览、在线编辑等功能。双击文件进入编辑模式，在线编辑提供与Word2010相同的界面与操作方式，用户在编辑合同之后按Ctrl+S键进行保存。合同管理界面如图4-6-1；合同在线编辑如图4-6-2。
 
-![考核评分](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/16.png)
+![合同管理界面](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/16.png)
+<em align="center">图4-6-1 合同管理界面</em>
 
 ![合同在线编辑界面](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/17.png)
+<em align="center">图4-6-2 合同在线编辑界面</em>
 
 ### 4.7 更多功能
 
