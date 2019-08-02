@@ -27,13 +27,16 @@
 &emsp;&emsp;2）访问系统（以本地访问localhost为例）。客户打开浏览器，在地址栏输入：http://localhost:9000/login ，进入IDOHR系统的登录界面，如图3-1-1。用户在登录后（初始账号：admin，密码：admin）进入系统，通过首页左侧的菜单列表选择所需功能。
 
 ![系统登录界面](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/1.png)
-<center><em>图3-1-1 系统登录界面</em></center>
+
+<center><em align="center">图3-1-1 系统登录界面</em></center>
 
 ## 四、系统使用说明
 
 &emsp;&emsp;系统提供人事管理、部门职位、薪酬福利、考勤打卡、绩效考核、文件管理等功能模块，实现了人力资源的合理管理、部门职位的灵活变动、工资福利的准确发放、考勤绩效的精准记录等功能。具体的功能点如图4-1-1：
 
 ![系统功能流程图](https://github.com/ycv587/IDOHR/blob/master/ReadMeImg/2.png)
+
+<em align="center">图4-1-1 系统功能流程图</em>
 
 ### 4.1 系统主页
 
